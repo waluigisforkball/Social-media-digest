@@ -450,37 +450,47 @@ const CATEGORIES = [
 ];
 
 const SOURCES = [
-  // Sports
-  { id: 'r_orioles',     cat: 'sports',     label: 'r/orioles',       url: 'https://www.reddit.com/r/orioles/.rss' },
-  { id: 'r_ravens',      cat: 'sports',     label: 'r/ravens',        url: 'https://www.reddit.com/r/ravens/.rss' },
-  { id: 'r_baseball',    cat: 'sports',     label: 'r/baseball',      url: 'https://www.reddit.com/r/baseball/.rss' },
-  { id: 'r_nfl',         cat: 'sports',     label: 'r/nfl',           url: 'https://www.reddit.com/r/nfl/.rss' },
-  { id: 'r_utahjazz',    cat: 'sports',     label: 'r/utahjazz',      url: 'https://www.reddit.com/r/utahjazz/.rss' },
-  { id: 'r_utah_hockey', cat: 'sports',     label: 'r/utah_hockey',   url: 'https://www.reddit.com/r/utah_hockey/.rss' },
-  { id: 'r_worldcup',    cat: 'sports',     label: 'r/WorldCup',      url: 'https://www.reddit.com/r/WorldCup/.rss' },
-  { id: 'r_olympics',    cat: 'sports',     label: 'r/olympics',      url: 'https://www.reddit.com/r/olympics/.rss' },
+  // Sports — Reddit
+  { id: 'r_orioles',     cat: 'sports',     label: 'r/orioles',         type: 'rss',  url: 'https://www.reddit.com/r/orioles/.rss' },
+  { id: 'r_ravens',      cat: 'sports',     label: 'r/ravens',          type: 'rss',  url: 'https://www.reddit.com/r/ravens/.rss' },
+  { id: 'r_baseball',    cat: 'sports',     label: 'r/baseball',        type: 'rss',  url: 'https://www.reddit.com/r/baseball/.rss' },
+  { id: 'r_nfl',         cat: 'sports',     label: 'r/nfl',             type: 'rss',  url: 'https://www.reddit.com/r/nfl/.rss' },
+  { id: 'r_utahjazz',    cat: 'sports',     label: 'r/utahjazz',        type: 'rss',  url: 'https://www.reddit.com/r/utahjazz/.rss' },
+  { id: 'r_utah_hockey', cat: 'sports',     label: 'r/utah_hockey',     type: 'rss',  url: 'https://www.reddit.com/r/utah_hockey/.rss' },
+  { id: 'r_worldcup',    cat: 'sports',     label: 'r/WorldCup',        type: 'rss',  url: 'https://www.reddit.com/r/WorldCup/.rss' },
+  { id: 'r_olympics',    cat: 'sports',     label: 'r/olympics',        type: 'rss',  url: 'https://www.reddit.com/r/olympics/.rss' },
+  // Sports — Bluesky Orioles
+  { id: 'bsky_orioles',      cat: 'sports', label: 'BSky: Orioles',       type: 'bsky', handle: 'orioles.com' },
+  { id: 'bsky_oriolesnews',  cat: 'sports', label: 'BSky: Orioles News',  type: 'bsky', handle: 'oriolesnews.bsky.social' },
+  { id: 'bsky_camdenchat',   cat: 'sports', label: 'BSky: Camden Chat',   type: 'bsky', handle: 'camdenchat.bsky.social' },
+  { id: 'bsky_afkostka',     cat: 'sports', label: 'BSky: A.F. Kostka',   type: 'bsky', handle: 'afkostka.bsky.social' },
+  { id: 'bsky_dallentuck',   cat: 'sports', label: 'BSky: D. Allentuck',  type: 'bsky', handle: 'danielleallentuck.bsky.social' },
+  // Sports — Bluesky Ravens
+  { id: 'bsky_ravens',       cat: 'sports', label: 'BSky: Ravens',        type: 'bsky', handle: 'baltimoreravens.bsky.social' },
+  { id: 'bsky_ravensnews',   cat: 'sports', label: 'BSky: Ravens News',   type: 'bsky', handle: 'ravensnews.bsky.social' },
+  { id: 'bsky_beatdown',     cat: 'sports', label: 'BSky: Balt. Beatdown',type: 'bsky', handle: 'baltimorebeatdown.bsky.social' },
   // News
-  { id: 'r_baltimore',   cat: 'news',       label: 'r/baltimore',     url: 'https://www.reddit.com/r/baltimore/.rss' },
-  { id: 'r_space',       cat: 'news',       label: 'r/space',         url: 'https://www.reddit.com/r/space/.rss' },
-  { id: 'r_nasa',        cat: 'news',       label: 'r/nasa',          url: 'https://www.reddit.com/r/nasa/.rss' },
-  { id: 'r_worldnews',   cat: 'news',       label: 'r/worldnews',     url: 'https://www.reddit.com/r/worldnews/.rss' },
-  { id: 'r_artificial',  cat: 'news',       label: 'r/artificial',    url: 'https://www.reddit.com/r/artificial/.rss' },
-  { id: 'r_epstein',     cat: 'news',       label: 'r/Epstein',       url: 'https://www.reddit.com/r/Epstein/.rss' },
-  { id: 'nasa_rss',      cat: 'news',       label: 'NASA News',       url: 'https://www.nasa.gov/rss/dyn/breaking_news.rss' },
+  { id: 'r_baltimore',   cat: 'news',       label: 'r/baltimore',       type: 'rss',  url: 'https://www.reddit.com/r/baltimore/.rss' },
+  { id: 'r_space',       cat: 'news',       label: 'r/space',           type: 'rss',  url: 'https://www.reddit.com/r/space/.rss' },
+  { id: 'r_nasa',        cat: 'news',       label: 'r/nasa',            type: 'rss',  url: 'https://www.reddit.com/r/nasa/.rss' },
+  { id: 'r_worldnews',   cat: 'news',       label: 'r/worldnews',       type: 'rss',  url: 'https://www.reddit.com/r/worldnews/.rss' },
+  { id: 'r_artificial',  cat: 'news',       label: 'r/artificial',      type: 'rss',  url: 'https://www.reddit.com/r/artificial/.rss' },
+  { id: 'r_epstein',     cat: 'news',       label: 'r/Epstein',         type: 'rss',  url: 'https://www.reddit.com/r/Epstein/.rss' },
+  { id: 'nasa_rss',      cat: 'news',       label: 'NASA News',         type: 'rss',  url: 'https://www.nasa.gov/rss/dyn/breaking_news.rss' },
   // Art
-  { id: 'r_mograph',     cat: 'art',        label: 'r/motiongraphics',url: 'https://www.reddit.com/r/motiongraphics/.rss' },
-  { id: 'r_stainedglass',cat: 'art',        label: 'r/StainedGlass',  url: 'https://www.reddit.com/r/StainedGlass/.rss' },
-  { id: 'r_aftereffects',cat: 'art',        label: 'r/AfterEffects',  url: 'https://www.reddit.com/r/AfterEffects/.rss' },
+  { id: 'r_mograph',     cat: 'art',        label: 'r/motiongraphics',  type: 'rss',  url: 'https://www.reddit.com/r/motiongraphics/.rss' },
+  { id: 'r_stainedglass',cat: 'art',        label: 'r/StainedGlass',    type: 'rss',  url: 'https://www.reddit.com/r/StainedGlass/.rss' },
+  { id: 'r_aftereffects',cat: 'art',        label: 'r/AfterEffects',    type: 'rss',  url: 'https://www.reddit.com/r/AfterEffects/.rss' },
   // Hobbies
-  { id: 'r_pokemontcg',  cat: 'hobbies',    label: 'r/PokemonTCG',    url: 'https://www.reddit.com/r/PokemonTCG/.rss' },
-  { id: 'r_chess',       cat: 'hobbies',    label: 'r/chess',         url: 'https://www.reddit.com/r/chess/.rss' },
+  { id: 'r_pokemontcg',  cat: 'hobbies',    label: 'r/PokemonTCG',      type: 'rss',  url: 'https://www.reddit.com/r/PokemonTCG/.rss' },
+  { id: 'r_chess',       cat: 'hobbies',    label: 'r/chess',           type: 'rss',  url: 'https://www.reddit.com/r/chess/.rss' },
   // Pop Culture
-  { id: 'r_animorphs',   cat: 'popculture', label: 'r/Animorphs',     url: 'https://www.reddit.com/r/Animorphs/.rss' },
-  { id: 'r_mario',       cat: 'popculture', label: 'r/Mario',         url: 'https://www.reddit.com/r/Mario/.rss' },
-  { id: 'r_dragonball',  cat: 'popculture', label: 'r/dragonball',    url: 'https://www.reddit.com/r/dragonball/.rss' },
-  { id: 'r_marvelstudios',cat:'popculture', label: 'r/MarvelStudios', url: 'https://www.reddit.com/r/MarvelStudios/.rss' },
-  { id: 'r_starwars',    cat: 'popculture', label: 'r/StarWars',      url: 'https://www.reddit.com/r/StarWars/.rss' },
-  { id: 'r_pokemon',     cat: 'popculture', label: 'r/pokemon',       url: 'https://www.reddit.com/r/pokemon/.rss' },
+  { id: 'r_animorphs',   cat: 'popculture', label: 'r/Animorphs',       type: 'rss',  url: 'https://www.reddit.com/r/Animorphs/.rss' },
+  { id: 'r_mario',       cat: 'popculture', label: 'r/Mario',           type: 'rss',  url: 'https://www.reddit.com/r/Mario/.rss' },
+  { id: 'r_dragonball',  cat: 'popculture', label: 'r/dragonball',      type: 'rss',  url: 'https://www.reddit.com/r/dragonball/.rss' },
+  { id: 'r_marvelstudios',cat:'popculture', label: 'r/MarvelStudios',   type: 'rss',  url: 'https://www.reddit.com/r/MarvelStudios/.rss' },
+  { id: 'r_starwars',    cat: 'popculture', label: 'r/StarWars',        type: 'rss',  url: 'https://www.reddit.com/r/StarWars/.rss' },
+  { id: 'r_pokemon',     cat: 'popculture', label: 'r/pokemon',         type: 'rss',  url: 'https://www.reddit.com/r/pokemon/.rss' },
 ];
 
 const PROXY = 'https://api.allorigins.win/raw?url=';
@@ -562,11 +572,35 @@ function parseRSS(xml, source) {
 
 async function fetchSource(source) {
   try {
+    if (source.type === 'bsky') return await fetchBluesky(source);
     const res = await fetch(PROXY + encodeURIComponent(source.url));
     if (!res.ok) throw new Error('Failed');
     const text = await res.text();
     const items = parseRSS(text, source);
     return items.map(i => ({ ...i, cat: source.cat, sourceLabel: source.label, sourceId: source.id }));
+  } catch {
+    return [];
+  }
+}
+
+async function fetchBluesky(source) {
+  try {
+    const url = `https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=${encodeURIComponent(source.handle)}&limit=15&filter=posts_no_replies`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('Failed');
+    const data = await res.json();
+    return (data.feed || [])
+      .filter(f => f.post?.record?.text)
+      .map(f => ({
+        title: f.post.record.text.slice(0, 200) + (f.post.record.text.length > 200 ? '…' : ''),
+        link: `https://bsky.app/profile/${source.handle}/post/${f.post.uri.split('/').pop()}`,
+        date: new Date(f.post.record.createdAt),
+        score: f.post.likeCount || null,
+        cat: source.cat,
+        sourceLabel: source.label,
+        sourceId: source.id,
+        isBsky: true,
+      }));
   } catch {
     return [];
   }
@@ -618,7 +652,7 @@ function renderFeed() {
           <span class="card-time">${timeAgo(item.date)}</span>
         </div>
         <div class="card-title">${escHtml(item.title)}</div>
-        ${item.score ? `<div class="card-score">▲ ${item.score.toLocaleString()}</div>` : ''}
+        ${item.score ? `<div class="card-score">${item.isBsky ? '♥' : '▲'} ${item.score.toLocaleString()}</div>` : ''}
       </a>`;
     });
     html += '</div>';
