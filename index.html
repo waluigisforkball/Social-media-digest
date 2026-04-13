@@ -211,6 +211,28 @@
     margin-bottom: 6px;
   }
 
+  .card-icon {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 13px;
+    line-height: 1;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    overflow: hidden;
+  }
+
+  .card-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    padding: 2px;
+  }
+
   .card-source {
     font-size: 11px;
     font-weight: 500;
@@ -493,6 +515,60 @@ const SOURCES = [
   { id: 'r_pokemon',     cat: 'popculture', label: 'r/pokemon',         type: 'rss',  url: 'https://www.reddit.com/r/pokemon/.rss' },
 ];
 
+// Icon map: source id -> { type: 'img'|'emoji', value: url|emoji }
+const ICONS = {
+  // Orioles sources
+  r_orioles:        { type: 'img',   value: 'https://a.espncdn.com/combiner/i?img=/i/teamlogos/mlb/500/bal.png' },
+  bsky_orioles:     { type: 'img',   value: 'https://a.espncdn.com/combiner/i?img=/i/teamlogos/mlb/500/bal.png' },
+  bsky_oriolesnews: { type: 'img',   value: 'https://a.espncdn.com/combiner/i?img=/i/teamlogos/mlb/500/bal.png' },
+  bsky_camdenchat:  { type: 'img',   value: 'https://a.espncdn.com/combiner/i?img=/i/teamlogos/mlb/500/bal.png' },
+  bsky_afkostka:    { type: 'img',   value: 'https://a.espncdn.com/combiner/i?img=/i/teamlogos/mlb/500/bal.png' },
+  bsky_dallentuck:  { type: 'img',   value: 'https://a.espncdn.com/combiner/i?img=/i/teamlogos/mlb/500/bal.png' },
+  // Ravens sources
+  r_ravens:         { type: 'img',   value: 'https://a.espncdn.com/combiner/i?img=/i/teamlogos/nfl/500/bal.png' },
+  bsky_ravens:      { type: 'img',   value: 'https://a.espncdn.com/combiner/i?img=/i/teamlogos/nfl/500/bal.png' },
+  bsky_ravensnews:  { type: 'img',   value: 'https://a.espncdn.com/combiner/i?img=/i/teamlogos/nfl/500/bal.png' },
+  bsky_beatdown:    { type: 'img',   value: 'https://a.espncdn.com/combiner/i?img=/i/teamlogos/nfl/500/bal.png' },
+  // Other sports
+  r_baseball:       { type: 'img',   value: 'https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/mlb.png' },
+  r_nfl:            { type: 'img',   value: 'https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/nfl.png' },
+  r_utahjazz:       { type: 'img',   value: 'https://a.espncdn.com/combiner/i?img=/i/teamlogos/nba/500/utah.png' },
+  r_utah_hockey:    { type: 'img',   value: 'https://a.espncdn.com/combiner/i?img=/i/teamlogos/nhl/500/utah.png' },
+  r_worldcup:       { type: 'emoji', value: '🌍' },
+  r_olympics:       { type: 'emoji', value: '🏅' },
+  // News
+  r_baltimore:      { type: 'emoji', value: '🦀' },
+  r_space:          { type: 'emoji', value: '🚀' },
+  r_nasa:           { type: 'emoji', value: '🛸' },
+  nasa_rss:         { type: 'emoji', value: '🛸' },
+  r_worldnews:      { type: 'emoji', value: '🌐' },
+  r_artificial:     { type: 'emoji', value: '🤖' },
+  r_epstein:        { type: 'emoji', value: '⚖️' },
+  // Art
+  r_mograph:        { type: 'emoji', value: '🎞️' },
+  r_stainedglass:   { type: 'emoji', value: '🪟' },
+  r_aftereffects:   { type: 'emoji', value: '✨' },
+  // Hobbies
+  r_pokemontcg:     { type: 'emoji', value: '🃏' },
+  r_chess:          { type: 'emoji', value: '♟️' },
+  // Pop Culture
+  r_animorphs:      { type: 'emoji', value: '🦅' },
+  r_mario:          { type: 'emoji', value: '🍄' },
+  r_dragonball:     { type: 'emoji', value: '🔮' },
+  r_marvelstudios:  { type: 'emoji', value: '🦸' },
+  r_starwars:       { type: 'emoji', value: '⚔️' },
+  r_pokemon:        { type: 'emoji', value: '⚡' },
+};
+
+function getIcon(sourceId) {
+  const icon = ICONS[sourceId];
+  if (!icon) return `<div class="card-icon">📄</div>`;
+  if (icon.type === 'img') {
+    return `<div class="card-icon"><img src="${icon.value}" alt="" onerror="this.parentElement.innerHTML='🏟️'"></div>`;
+  }
+  return `<div class="card-icon">${icon.value}</div>`;
+}
+
 const PROXY = 'https://api.allorigins.win/raw?url=';
 
 // State
@@ -648,6 +724,7 @@ function renderFeed() {
       const delay = (ci * 3 + i) * 20;
       html += `<a class="card" data-cat="${item.cat}" href="${item.link}" target="_blank" rel="noopener" style="animation-delay:${delay}ms">
         <div class="card-meta">
+          ${getIcon(item.sourceId)}
           <span class="card-source">${item.sourceLabel}</span>
           <span class="card-time">${timeAgo(item.date)}</span>
         </div>
