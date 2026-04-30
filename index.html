@@ -372,8 +372,8 @@
   <svg width="80" height="80" style="top:14%;left:42%"><path d="M40,8 L40,72 M8,40 L72,40" stroke="currentColor" stroke-width="10" stroke-linecap="round" class="ms"/></svg>
   <!-- Dots cluster -->
   <svg width="80" height="80" style="top:48%;left:48%"><circle cx="20" cy="20" r="10" fill="currentColor" class="ms"/><circle cx="60" cy="20" r="10" fill="currentColor" class="ms"/><circle cx="20" cy="60" r="10" fill="currentColor" class="ms"/><circle cx="60" cy="60" r="10" fill="currentColor" class="ms"/></svg>
-  <!-- Outlined square rotated -->
-  <svg width="90" height="90" style="top:90%;left:45%"><rect width="70" height="70" x="10" y="10" rx="4" fill="none" stroke="currentColor" stroke-width="9" transform="rotate(20,45,45)" class="ms"/></svg>
+  <!-- Outlined square static -->
+  <svg width="90" height="90" style="top:90%;left:45%"><rect width="70" height="70" x="10" y="10" rx="4" fill="none" stroke="currentColor" stroke-width="9" class="ms"/></svg>
 </div>
 
 <div class="header" id="mainHeader">
@@ -460,10 +460,16 @@ const SOURCES = [
   { id:'bsky_dallentuck',  cat:'sports', label:'BSky: D. Allentuck',   type:'bsky', handle:'danielleallentuck.bsky.social' },
   { id:'bsky_ravens',      cat:'sports', label:'BSky: Ravens',         type:'bsky', handle:'baltimoreravens.bsky.social' },
   { id:'bsky_ravensnews',  cat:'sports', label:'BSky: Ravens News',    type:'bsky', handle:'ravensnews.bsky.social' },
-  { id:'bsky_beatdown',    cat:'sports', label:'BSky: Balt. Beatdown', type:'bsky', handle:'baltimorebeatdown.bsky.social' },
-  { id:'bsky_jcmeyer',     cat:'sports', label:'BSky: J.C. Meyer',      type:'bsky', handle:'jcalvinmeyer.bsky.social' },
-  { id:'bsky_flockrundown',cat:'sports', label:'BSky: Flock Rundown',   type:'bsky', handle:'theflockrundown.bsky.social' },
-  { id:'bsky_minakimes',   cat:'sports', label:'BSky: Mina Kimes',      type:'bsky', handle:'minakimes.bsky.social' },
+  { id:'bsky_beatdown',    cat:'sports', label:'BSky: Balt. Beatdown', type:'bsky', handle:'baltimorebeatdown.bsky.social', limit:5 },
+  { id:'bsky_jcmeyer',     cat:'sports', label:'BSky: J.C. Meyer',      type:'bsky', handle:'jcalvinmeyer.bsky.social',      limit:5 },
+  { id:'bsky_flockrundown',cat:'sports', label:'BSky: Flock Rundown',   type:'bsky', handle:'theflockrundown.bsky.social',   limit:5 },
+  { id:'bsky_minakimes',   cat:'sports', label:'BSky: Mina Kimes',      type:'bsky', handle:'minakimes.bsky.social',         limit:3 },
+  { id:'bsky_russini',     cat:'sports', label:'BSky: D. Russini',      type:'bsky', handle:'diannarussini.bsky.social',     limit:3 },
+  { id:'bsky_fieldyates',  cat:'sports', label:'BSky: Field Yates',     type:'bsky', handle:'fieldyates.bsky.social',        limit:3 },
+  { id:'bsky_arif',        cat:'sports', label:'BSky: Arif Hasan',      type:'bsky', handle:'arif.bsky.social',              limit:3 },
+  { id:'bsky_nflnews',     cat:'sports', label:'BSky: NFL News',        type:'bsky', handle:'nflnewsposter.bsky.social',     limit:5 },
+  { id:'bsky_mlbtr',       cat:'sports', label:'BSky: MLB Trade Rumors',type:'bsky', handle:'mlbtraderumors.bsky.social',    limit:5 },
+  { id:'mlbtr_rss',        cat:'sports', label:'MLB Trade Rumors',      type:'rss',  url:'https://www.mlbtraderumors.com/feed', limit:5 },
   { id:'r_baltimore',    cat:'news',    label:'r/baltimore',      type:'rss',  url:'https://www.reddit.com/r/baltimore/.rss' },
   { id:'r_space',        cat:'news',    label:'r/space',          type:'rss',  url:'https://www.reddit.com/r/space/.rss' },
   { id:'baltimore_banner',cat:'news',   label:'Baltimore Banner', type:'rss',  url:'https://www.thebaltimorebanner.com/feed/' },
@@ -519,6 +525,12 @@ const ICONS = {
   bsky_jcmeyer:'img:https://a.espncdn.com/combiner/i?img=/i/teamlogos/mlb/500/bal.png',
   bsky_flockrundown:'img:https://a.espncdn.com/combiner/i?img=/i/teamlogos/nfl/500/bal.png',
   bsky_minakimes:'img:https://a.espncdn.com/combiner/i?img=/i/teamlogos/nfl/500/bal.png',
+  bsky_russini:'img:https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/nfl.png',
+  bsky_fieldyates:'img:https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/nfl.png',
+  bsky_arif:'img:https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/nfl.png',
+  bsky_nflnews:'img:https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/nfl.png',
+  bsky_mlbtr:'img:https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/mlb.png',
+  mlbtr_rss:'img:https://a.espncdn.com/combiner/i?img=/i/teamlogos/leagues/500/mlb.png',
 };
 
 const TEAM_CONFIG = [
@@ -548,8 +560,17 @@ function setAccentColor(tabId) {
   // Update zigzag
   const zl = document.getElementById('zigzagLine');
   if (zl) zl.setAttribute('stroke', color);
-  // Update window toggle active state color
-  document.querySelectorAll('.window-btn.active').forEach(b => { b.style.background = color; });
+  // Update window toggle active button color
+  const labels={1:'24H',3:'72H',7:'7D'};
+  document.querySelectorAll('.window-btn').forEach(b=>{
+    if(b.classList.contains('active')) {
+      b.style.background = color;
+      b.style.color = '#1a1714';
+    } else {
+      b.style.background = '';
+      b.style.color = '';
+    }
+  });
 }
 
 // ── HELPERS ──
@@ -615,9 +636,10 @@ function parseRSS(xml, source) {
 async function fetchSource(source) {
   try {
     if(source.type==='bsky') {
-      const url=`https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=${encodeURIComponent(source.handle)}&limit=15&filter=posts_no_replies`;
+      const fetchLimit = source.limit || 15;
+      const url=`https://public.api.bsky.app/xrpc/app.bsky.feed.getAuthorFeed?actor=${encodeURIComponent(source.handle)}&limit=${fetchLimit}&filter=posts_no_replies`;
       const data=await(await fetch(url)).json();
-      return (data.feed||[]).filter(f=>f.post?.record?.text).map(f=>({
+      return (data.feed||[]).filter(f=>f.post?.record?.text).slice(0, fetchLimit).map(f=>({
         title:f.post.record.text.slice(0,200)+(f.post.record.text.length>200?'…':''),
         link:`https://bsky.app/profile/${source.handle}/post/${f.post.uri.split('/').pop()}`,
         date:new Date(f.post.record.createdAt),score:f.post.likeCount||null,
@@ -675,38 +697,20 @@ async function fetchLast5(team) {
 
 // MLB player IDs: Adley Rutschman = 668939, Gunnar Henderson = 683002
 const ORIOLES_PLAYERS = [
-  { id: 668939, name: 'Adley Rutschman', pos: 'C', posCode: 'C' },
-  { id: 683002, name: 'Gunnar Henderson', pos: 'SS', posCode: 'SS' },
+  { id: 668939, name: 'Adley Rutschman', pos: 'C' },
+  { id: 683002, name: 'Gunnar Henderson', pos: 'SS' },
 ];
 
 async function fetchMLBPlayerStats(player) {
   try {
-    // Season stats
     const data = await espnFetch(`https://statsapi.mlb.com/api/v1/people/${player.id}/stats?stats=season&season=2026&group=hitting`);
     const s = data?.stats?.[0]?.splits?.[0]?.stat;
     if (!s) return null;
-
-    // Position WAR ranking — use MLB stats API leaderboard
-    let rank = null;
-    try {
-      const leaders = await espnFetch(`https://statsapi.mlb.com/api/v1/stats/leaders?leaderCategories=war&season=2026&playerPool=qualified&limit=50`);
-      const leaderList = leaders?.leagueLeaders?.[0]?.leaders || [];
-      const idx = leaderList.findIndex(l => String(l.person?.id) === String(player.id));
-      if (idx >= 0) rank = idx + 1;
-      // If not in top 50, try position-specific
-      if (!rank) {
-        const posLeaders = await espnFetch(`https://statsapi.mlb.com/api/v1/stats/leaders?leaderCategories=war&season=2026&playerPool=qualified&position=${player.posCode}&limit=20`);
-        const posIdx = (posLeaders?.leagueLeaders?.[0]?.leaders||[]).findIndex(l=>String(l.person?.id)===String(player.id));
-        if (posIdx >= 0) rank = posIdx + 1;
-      }
-    } catch {}
-
     return {
       avg: s.avg || '.---',
       hr: s.homeRuns ?? '—',
       rbi: s.rbi ?? '—',
       ops: s.ops || '.---',
-      rank,
     };
   } catch { return null; }
 }
@@ -786,11 +790,9 @@ function buildTeamCard(team, {yesterdayGame,nextGame,record,last5,playerStats}) 
   if (playerStats?.length) {
     const rows = playerStats.map(({player, stats}) => {
       if (!stats) return '';
-      const rankHtml = stats.rank
-        ? `<span style="font-size:10px;font-weight:800;background:var(--sports-light);color:var(--sports);padding:2px 6px;border-radius:4px;margin-left:6px">#${stats.rank} ${player.pos}</span>`
-        : '';
+      const rankHtml = '';
       return `<div class="player-row">
-        <div><span class="player-name">${player.name}</span><span class="player-pos">${player.pos}</span>${rankHtml}</div>
+        <div><span class="player-name">${player.name}</span><span class="player-pos">${player.pos}</span></div>
         <div class="player-statline">
           <div class="player-stat"><div class="player-stat-val">${stats.avg}</div><div class="player-stat-key">AVG</div></div>
           <div class="player-stat"><div class="player-stat-val">${stats.hr}</div><div class="player-stat-key">HR</div></div>
@@ -868,7 +870,13 @@ function setTab(id) {
 function setWindow(days) {
   windowDays=days;
   const labels={1:'24H',3:'72H',7:'7D'};
-  document.querySelectorAll('.window-btn').forEach(b=>b.classList.toggle('active',b.textContent===labels[days]));
+  const color = CAT_COLORS[activeTab] || '#f5a623';
+  document.querySelectorAll('.window-btn').forEach(b=>{
+    const isActive = b.textContent===labels[days];
+    b.classList.toggle('active', isActive);
+    b.style.background = isActive ? color : '';
+    b.style.color = isActive ? '#1a1714' : '';
+  });
   renderFeed();
 }
 
@@ -887,6 +895,39 @@ function hybridScore(item) {
   return score / Math.pow(hoursOld + 2, 1.5);
 }
 
+// Per-source slot cap: no single source dominates the blended feed
+const SOURCE_SLOT_CAP = 2;
+
+function blendedFeed(items, limit=60) {
+  const sorted = [...items].sort((a,b) => hybridScore(b) - hybridScore(a));
+  const slotCount = {};
+  const result = [];
+  for (const item of sorted) {
+    if (result.length >= limit) break;
+    const count = slotCount[item.sourceId] || 0;
+    if (count < SOURCE_SLOT_CAP) {
+      result.push(item);
+      slotCount[item.sourceId] = count + 1;
+    }
+  }
+  // If we didn't fill the feed (lots of sources with only 1-2 posts), do a second pass with a higher cap
+  if (result.length < limit * 0.6) {
+    const seen = new Set(result.map((_,i)=>i));
+    const slotCount2 = {};
+    result.forEach(item => { slotCount2[item.sourceId] = (slotCount2[item.sourceId]||0)+1; });
+    for (const item of sorted) {
+      if (result.length >= limit) break;
+      if (result.includes(item)) continue;
+      const count = slotCount2[item.sourceId] || 0;
+      if (count < SOURCE_SLOT_CAP * 2) {
+        result.push(item);
+        slotCount2[item.sourceId] = count + 1;
+      }
+    }
+  }
+  return result;
+}
+
 function renderFeed() {
   const feed=document.getElementById('feed');
   const cutoff=Date.now()-windowDays*24*60*60*1000;
@@ -901,9 +942,9 @@ function renderFeed() {
   let html='';
 
   if(activeTab==='all') {
-    // Blended hybrid sort — everything interleaved
-    const sorted=[...inTab].sort((a,b)=>hybridScore(b)-hybridScore(a));
-    sorted.slice(0,60).forEach((item,i)=>{
+    // Blended feed with per-source slot cap
+    const blended = blendedFeed(inTab, 60);
+    blended.forEach((item,i)=>{
       html+=`<a class="card" data-cat="${item.cat}" href="${item.link}" target="_blank" rel="noopener" style="animation-delay:${i*15}ms">
         <div class="card-meta">
           ${getIcon(item.sourceId)}
